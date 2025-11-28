@@ -1,58 +1,74 @@
-Q121: Create file and write user data
+Q111: First negative integer in each subarray of size k
 #include <stdio.h>
 
 int main() {
-    FILE *file;
-    char name[50];
-    int age;
+    int n, k, i, j;
     
-    printf("Enter your name: ");
-    fgets(name, sizeof(name), stdin);
+    printf("Enter size of array: ");
+    scanf("%d", &n);
     
-    printf("Enter your age: ");
-    scanf("%d", &age);
+    int arr[n];
     
-    file = fopen("info.txt", "w");
+    printf("Enter array elements:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
     
-    if (file == NULL) {
-        printf("Error: Could not create file!\n");
+    printf("Enter window size k: ");
+    scanf("%d", &k);
+    
+    printf("Array: ");
+    for (i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    printf("Window size k: %d\n", k);
+    
+    if (k > n) {
+        printf("Error: k cannot be greater than array size\n");
         return 1;
     }
     
-    fprintf(file, "Name: %s", name);
-    fprintf(file, "Age: %d\n", age);
-    
-    fclose(file);
-    
-    printf("\nData successfully saved to info.txt!\n");
-    
-    return 0;
-}
+    printf("\nFirst negative in each window:\n");
 
-Q122: Read file contents using fgets()
-#include <stdio.h>
-
-int main() {
-    FILE *file;
-    char line[200];
-    
-    file = fopen("info.txt", "r");
-    
-    if (file == NULL) {
-        printf("Error: Could not open file!\n");
-        return 1;
+    for (i = 0; i <= n - k; i++) {
+        int first_negative = 0;  
+        
+        printf("Window %d: [", i + 1);
+        for (j = i; j < i + k; j++) {
+            printf("%d", arr[j]);
+            if (j < i + k - 1) printf(", ");
+         
+            if (arr[j] < 0 && first_negative == 0) {
+                first_negative = arr[j];
+            }
+        }
+        printf("] -> First negative: ");
+        if (first_negative != 0) {
+            printf("%d\n", first_negative);
+        } else {
+            printf("0 (no negative)\n");
+        }
     }
     
-    printf("Contents of info.txt:\n");
-    printf("---------------------\n");
-    
-    while (fgets(line, sizeof(line), file) != NULL) {
-        printf("%s", line);
+    printf("\nFirst negative integers in each window: ");
+    for (i = 0; i <= n - k; i++) {
+        int first_negative = 0;  
+        
+  
+        for (j = i; j < i + k; j++) {
+            if (arr[j] < 0) {
+                first_negative = arr[j];
+                break; 
+            }
+        }
+        
+        printf("%d", first_negative);
+        if (i < n - k) {
+            printf(" ");
+        }
     }
-    
-    printf("---------------------\n");
-    
-    fclose(file);
+    printf("\n");
     
     return 0;
 }
