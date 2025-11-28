@@ -1,87 +1,38 @@
-Q123: Count characters, words, and lines in file
+Q112: Maximum sum of contiguous subarray (Kadane's Algorithm)
 #include <stdio.h>
 
 int main() {
-    FILE *file;
-    char filename[50];
-    char ch;
-    int characters = 0, words = 0, lines = 0;
-    int in_word = 0;
+    int n, i;
     
-    printf("Enter filename: ");
-    scanf("%s", filename);
+    printf("Enter size of array: ");
+    scanf("%d", &n);
     
-    file = fopen(filename, "r");
+    int arr[n];
     
-    if (file == NULL) {
-        printf("Error: Could not open file!\n");
-        return 1;
+    printf("Enter array elements:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
     }
     
-    while ((ch = fgetc(file)) != EOF) {
-        characters++;
-        
-        if (ch == '\n') {
-            lines++;
-        }
-        
-        if (ch == ' ' || ch == '\n' || ch == '\t') {
-            in_word = 0;
-        } else if (in_word == 0) {
-            in_word = 1;
-            words++;
-        }
+    printf("Array: ");
+    for (i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
     }
-    
-    if (characters > 0 && ch != '\n') {
-        lines++;
-    }
-    
-    fclose(file);
-    
-    printf("\nFile Statistics:\n");
-    printf("Characters: %d\n", characters);
-    printf("Words: %d\n", words);
-    printf("Lines: %d\n", lines);
-    
-    return 0;
-}
+    printf("\n");
 
-Q124: Copy file contents
-#include <stdio.h>
-
-int main() {
-    FILE *source, *destination;
-    char source_file[50], dest_file[50];
-    char ch;
+    int max_sum = arr[0];
+    int current_sum = arr[0];
     
-    printf("Enter source filename: ");
-    scanf("%s", source_file);
+    printf("\nKadane's Algorithm process:\n");
+    printf("Index 0: current_sum = %d, max_sum = %d\n", current_sum, max_sum);
     
-    printf("Enter destination filename: ");
-    scanf("%s", dest_file);
-    
-    source = fopen(source_file, "r");
-    if (source == NULL) {
-        printf("Error: Could not open source file!\n");
-        return 1;
+    for (i = 1; i < n; i++) {
+        current_sum = (arr[i] > current_sum + arr[i]) ? arr[i] : current_sum + arr[i];
+        max_sum = (current_sum > max_sum) ? current_sum : max_sum;
+        printf("Index %d: current_sum = %d, max_sum = %d\n", i, current_sum, max_sum);
     }
     
-    destination = fopen(dest_file, "w");
-    if (destination == NULL) {
-        printf("Error: Could not create destination file!\n");
-        fclose(source);
-        return 1;
-    }
-    
-    while ((ch = fgetc(source)) != EOF) {
-        fputc(ch, destination);
-    }
-    
-    printf("\nFile copied successfully from %s to %s!\n", source_file, dest_file);
-    
-    fclose(source);
-    fclose(destination);
+    printf("\nMaximum sum of contiguous subarray: %d\n", max_sum);
     
     return 0;
 }
