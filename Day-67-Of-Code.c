@@ -1,100 +1,53 @@
-Q133: Enum for months with days count
+Q117: Merge two sorted arrays
 #include <stdio.h>
 
-enum Month {
-    JANUARY = 1,
-    FEBRUARY,
-    MARCH,
-    APRIL,
-    MAY,
-    JUNE,
-    JULY,
-    AUGUST,
-    SEPTEMBER,
-    OCTOBER,
-    NOVEMBER,
-    DECEMBER
-};
-
 int main() {
-    enum Month month;
+    int m, n, i, j, k;
     
-    printf("Months and their days:\n");
+    printf("Enter size of first array: ");
+    scanf("%d", &m);
     
-    for (month = JANUARY; month <= DECEMBER; month++) {
-        printf("Month %d: ", month);
-        
-        switch(month) {
-            case JANUARY:
-                printf("January - 31 days\n");
-                break;
-            case FEBRUARY:
-                printf("February - 28/29 days\n");
-                break;
-            case MARCH:
-                printf("March - 31 days\n");
-                break;
-            case APRIL:
-                printf("April - 30 days\n");
-                break;
-            case MAY:
-                printf("May - 31 days\n");
-                break;
-            case JUNE:
-                printf("June - 30 days\n");
-                break;
-            case JULY:
-                printf("July - 31 days\n");
-                break;
-            case AUGUST:
-                printf("August - 31 days\n");
-                break;
-            case SEPTEMBER:
-                printf("September - 30 days\n");
-                break;
-            case OCTOBER:
-                printf("October - 31 days\n");
-                break;
-            case NOVEMBER:
-                printf("November - 30 days\n");
-                break;
-            case DECEMBER:
-                printf("December - 31 days\n");
-                break;
+    int nums1[m];
+    
+    printf("Enter first sorted array elements:\n");
+    for (i = 0; i < m; i++) {
+        scanf("%d", &nums1[i]);
+    }
+    
+    printf("Enter size of second array: ");
+    scanf("%d", &n);
+    
+    int nums2[n];
+    
+    printf("Enter second sorted array elements:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &nums2[i]);
+    }
+
+    int merged[m + n];
+    i = 0; j = 0; k = 0;
+    
+    while (i < m && j < n) {
+        if (nums1[i] <= nums2[j]) {
+            merged[k++] = nums1[i++];
+        } else {
+            merged[k++] = nums2[j++];
         }
     }
     
-    return 0;
-}
-
-Q134: Enum for status codes
-#include <stdio.h>
-
-enum Status {
-    SUCCESS,
-    FAILURE,
-    TIMEOUT
-};
-
-int main() {
-    enum Status status;
-    
-    printf("Enter status (0=SUCCESS, 1=FAILURE, 2=TIMEOUT): ");
-    scanf("%d", &status);
-    
-    switch(status) {
-        case SUCCESS:
-            printf("Operation completed successfully!\n");
-            break;
-        case FAILURE:
-            printf("Operation failed!\n");
-            break;
-        case TIMEOUT:
-            printf("Operation timed out!\n");
-            break;
-        default:
-            printf("Invalid status\n");
+    while (i < m) {
+        merged[k++] = nums1[i++];
     }
+    
+    while (j < n) {
+        merged[k++] = nums2[j++];
+    }
+    
+    printf("Merged sorted array: ");
+    for (i = 0; i < m + n; i++) {
+        printf("%d ", merged[i]);
+    }
+    printf("\n");
     
     return 0;
 }
