@@ -1,112 +1,53 @@
-Q111: First negative integer in each subarray of size k
+Q106: Find next greater element for each element (brute force)
 #include <stdio.h>
 
 int main() {
-    int n, k, i, j;
+    int n, i, j;
     
     printf("Enter size of array: ");
     scanf("%d", &n);
     
     int arr[n];
+    int next_greater[n];
     
     printf("Enter array elements:\n");
     for (i = 0; i < n; i++) {
         scanf("%d", &arr[i]);
     }
     
-    printf("Enter window size k: ");
-    scanf("%d", &k);
-    
     printf("Array: ");
     for (i = 0; i < n; i++) {
         printf("%d ", arr[i]);
     }
     printf("\n");
-    printf("Window size k: %d\n", k);
     
-    if (k > n) {
-        printf("Error: k cannot be greater than array size\n");
-        return 1;
-    }
+
+    for (i = 0; i < n; i++) {
+        next_greater[i] = -1; 
     
-    printf("\nFirst negative in each window:\n");
- 
-    for (i = 0; i <= n - k; i++) {
-        int first_negative = 0; 
-        
-        printf("Window %d: [", i + 1);
-        for (j = i; j < i + k; j++) {
-            printf("%d", arr[j]);
-            if (j < i + k - 1) printf(", ");
-      
-            if (arr[j] < 0 && first_negative == 0) {
-                first_negative = arr[j];
-            }
-        }
-        printf("] -> First negative: ");
-        if (first_negative != 0) {
-            printf("%d\n", first_negative);
-        } else {
-            printf("0 (no negative)\n");
-        }
-    }
-    
-    printf("\nFirst negative integers in each window: ");
-    for (i = 0; i <= n - k; i++) {
-        int first_negative = 0; 
-   
-        for (j = i; j < i + k; j++) {
-            if (arr[j] < 0) {
-                first_negative = arr[j];
+        for (j = i + 1; j < n; j++) {
+            if (arr[j] > arr[i]) {
+                next_greater[i] = arr[j];
                 break;
             }
         }
         
-        printf("%d", first_negative);
-        if (i < n - k) {
-            printf(" ");
+        printf("For element %d at index %d: ", arr[i], i);
+        if (next_greater[i] != -1) {
+            printf("Next greater element is %d\n", next_greater[i]);
+        } else {
+            printf("No next greater element\n");
+        }
+    }
+    
+    printf("\nNext Greater Elements: ");
+    for (i = 0; i < n; i++) {
+        printf("%d", next_greater[i]);
+        if (i < n - 1) {
+            printf(", ");
         }
     }
     printf("\n");
-    
-    return 0;
-}
-
-Q112: Maximum sum of contiguous subarray (Kadane's Algorithm)
-#include <stdio.h>
-
-int main() {
-    int n, i;
-    
-    printf("Enter size of array: ");
-    scanf("%d", &n);
-    
-    int arr[n];
-    
-    printf("Enter array elements:\n");
-    for (i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
-    }
-    
-    printf("Array: ");
-    for (i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
- 
-    int max_sum = arr[0];
-    int current_sum = arr[0];
-    
-    printf("\nKadane's Algorithm process:\n");
-    printf("Index 0: current_sum = %d, max_sum = %d\n", current_sum, max_sum);
-    
-    for (i = 1; i < n; i++) {
-        current_sum = (arr[i] > current_sum + arr[i]) ? arr[i] : current_sum + arr[i];
-        max_sum = (current_sum > max_sum) ? current_sum : max_sum;
-        printf("Index %d: current_sum = %d, max_sum = %d\n", i, current_sum, max_sum);
-    }
-    
-    printf("\nMaximum sum of contiguous subarray: %d\n", max_sum);
     
     return 0;
 }
