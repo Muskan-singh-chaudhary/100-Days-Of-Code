@@ -1,122 +1,51 @@
-Q109: Maximum sum of all subarrays of size k.
+Q105: Find majority element (appears more than n/2 times)
 #include <stdio.h>
 
 int main() {
-    int n, k, i, j;
-    int max_sum = 0;
+    int n, i, j;
+    int majority = -1;
     
     printf("Enter size of array: ");
     scanf("%d", &n);
     
-    int arr[n];
+    int nums[n];
     
     printf("Enter array elements:\n");
     for (i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
+        scanf("%d", &nums[i]);
     }
-    
-    printf("Enter subarray size k: ");
-    scanf("%d", &k);
     
     printf("Array: ");
     for (i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
+        printf("%d ", nums[i]);
     }
     printf("\n");
-    printf("Subarray size k: %d\n", k);
-    
-    if (k > n) {
-        printf("Error: k cannot be greater than array size\n");
-        return 1;
-    }
- 
-    printf("\nAll subarrays of size %d:\n", k);
-    
-    for (i = 0; i <= n - k; i++) {
-        int current_sum = 0;
-        
-        printf("Subarray %d: [", i + 1);
-        for (j = i; j < i + k; j++) {
-            printf("%d", arr[j]);
-            if (j < i + k - 1) printf(", ");
-            current_sum += arr[j];
-        }
-        printf("] = %d\n", current_sum);
-   
-        if (i == 0 || current_sum > max_sum) {
-            max_sum = current_sum;
-        }
-    }
-    
-    printf("\nMaximum sum of subarray of size %d: %d\n", k, max_sum);
-    
-    return 0;
-}
-
-Q110: Maximum element in each subarray of size k (sliding window)
-#include <stdio.h>
-
-int main() {
-    int n, k, i, j;
-    
-    printf("Enter size of array: ");
-    scanf("%d", &n);
-    
-    int arr[n];
-    
-    printf("Enter array elements:\n");
+    printf("Array size: %d\n", n);
+    printf("Majority threshold: %d (more than n/2)\n", n/2);
+  
     for (i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
-    }
+        int count = 0;
     
-    printf("Enter window size k: ");
-    scanf("%d", &k);
-    
-    printf("Array: ");
-    for (i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-    printf("Window size k: %d\n", k);
-    
-    if (k > n) {
-        printf("Error: k cannot be greater than array size\n");
-        return 1;
-    }
-    
-    printf("\nSliding window maximums:\n");
-
-    for (i = 0; i <= n - k; i++) {
-        int max_in_window = arr[i];
-        
-        printf("Window %d: [", i + 1);
-        for (j = i; j < i + k; j++) {
-            printf("%d", arr[j]);
-            if (j < i + k - 1) printf(", ");
-
-            if (arr[j] > max_in_window) {
-                max_in_window = arr[j];
+        for (j = 0; j < n; j++) {
+            if (nums[j] == nums[i]) {
+                count++;
             }
         }
-        printf("] -> Max: %d\n", max_in_window);
-    }
-    
-    printf("\nMaximum elements in each window: ");
-    for (i = 0; i <= n - k; i++) {
-        int max_in_window = arr[i];
+        
+        printf("Element %d appears %d times\n", nums[i], count);
      
-        for (j = i; j < i + k; j++) {
-            if (arr[j] > max_in_window) {
-                max_in_window = arr[j];
-            }
-        }
-        
-        printf("%d", max_in_window);
-        if (i < n - k) {
-            printf(" ");
+        if (count > n/2) {
+            majority = nums[i];
+            break;
         }
     }
-    printf("\n");
+    
+    if (majority != -1) {
+        printf("Majority element: %d\n", majority);
+    } else {
+        printf("No majority element found\n");
+        printf("Result: -1\n");
+    }
     
     return 0;
 }
