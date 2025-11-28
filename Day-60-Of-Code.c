@@ -1,74 +1,67 @@
-Q119: Find repeated element in single iteration
+Q110: Maximum element in each subarray of size k (sliding window)
 #include <stdio.h>
 
 int main() {
-    int n, i;
+    int n, k, i, j;
     
     printf("Enter size of array: ");
     scanf("%d", &n);
     
-    int nums[n];
+    int arr[n];
     
     printf("Enter array elements:\n");
     for (i = 0; i < n; i++) {
-        scanf("%d", &nums[i]);
+        scanf("%d", &arr[i]);
     }
-   
-    int actual_sum = 0;
-    int expected_sum = 0;
     
+    printf("Enter window size k: ");
+    scanf("%d", &k);
+    
+    printf("Array: ");
     for (i = 0; i < n; i++) {
-        actual_sum += nums[i];
+        printf("%d ", arr[i]);
     }
-  
-    int max = nums[0];
-    for (i = 1; i < n; i++) {
-        if (nums[i] > max) {
-            max = nums[i];
+    printf("\n");
+    printf("Window size k: %d\n", k);
+    
+    if (k > n) {
+        printf("Error: k cannot be greater than array size\n");
+        return 1;
+    }
+    
+    printf("\nSliding window maximums:\n");
+
+    for (i = 0; i <= n - k; i++) {
+        int max_in_window = arr[i];
+        
+        printf("Window %d: [", i + 1);
+        for (j = i; j < i + k; j++) {
+            printf("%d", arr[j]);
+            if (j < i + k - 1) printf(", ");
+       
+            if (arr[j] > max_in_window) {
+                max_in_window = arr[j];
+            }
+        }
+        printf("] -> Max: %d\n", max_in_window);
+    }
+    
+    printf("\nMaximum elements in each window: ");
+    for (i = 0; i <= n - k; i++) {
+        int max_in_window = arr[i];
+      
+        for (j = i; j < i + k; j++) {
+            if (arr[j] > max_in_window) {
+                max_in_window = arr[j];
+            }
+        }
+        
+        printf("%d", max_in_window);
+        if (i < n - k) {
+            printf(" ");
         }
     }
-  
-    for (i = 0; i <= max; i++) {
-        expected_sum += i;
-    }
-    
-    int repeated = actual_sum - expected_sum;
-    
-    printf("Repeated element: %d\n", repeated);
-    
-    return 0;
-}
-
-Q120: Convert string to sentence case
-#include <stdio.h>
-#include <string.h>
-
-int main() {
-    char str[200];
-    int i;
-    int capitalize_next = 1;
-    
-    printf("Enter a string: ");
-    fgets(str, sizeof(str), stdin);
-    
-    printf("Original: %s", str);
- 
-    for (i = 0; str[i] != '\0'; i++) {
-        if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n') {
-            capitalize_next = 1;
-        } else if (capitalize_next && str[i] >= 'a' && str[i] <= 'z') {
-            str[i] = str[i] - 32;
-            capitalize_next = 0;
-        } else if (!capitalize_next && str[i] >= 'A' && str[i] <= 'Z') {
-            str[i] = str[i] + 32;
-        } else if (str[i] >= 'a' && str[i] <= 'z') {
-            capitalize_next = 0;
-        } else if (str[i] >= 'A' && str[i] <= 'Z') {
-            capitalize_next = 0;
-        }
-    }
-    
-    printf("Sentence case: %s", str);
+    printf("\n");
     
     return 0;
 }
