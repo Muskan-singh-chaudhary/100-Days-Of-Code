@@ -1,70 +1,42 @@
-Q137: Enum for user roles
+Q119: Find repeated element in single iteration
 #include <stdio.h>
 
-enum Role {
-    ADMIN,
-    USER,
-    GUEST
-};
-
 int main() {
-    enum Role role;
+    int n, i;
     
-    printf("Enter role (0=ADMIN, 1=USER, 2=GUEST): ");
-    scanf("%d", &role);
+    printf("Enter size of array: ");
+    scanf("%d", &n);
     
-    switch(role) {
-        case ADMIN:
-            printf("Welcome Admin! You have full access.\n");
-            break;
-        case USER:
-            printf("Welcome User! You have limited access.\n");
-            break;
-        case GUEST:
-            printf("Welcome Guest! You have read-only access.\n");
-            break;
-        default:
-            printf("Invalid role\n");
+    int nums[n];
+    
+    printf("Enter array elements:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &nums[i]);
     }
     
-    return 0;
-}
 
-Q138: Print all enum names and values using loop
-#include <stdio.h>
-
-enum Color {
-    RED,
-    GREEN,
-    BLUE,
-    YELLOW,
-    ORANGE
-};
-
-int main() {
-    printf("Enum Color values:\n");
+    int actual_sum = 0;
+    int expected_sum = 0;
     
-    for (int i = RED; i <= ORANGE; i++) {
-        printf("Color %d: ", i);
-        
-        switch(i) {
-            case RED:
-                printf("RED\n");
-                break;
-            case GREEN:
-                printf("GREEN\n");
-                break;
-            case BLUE:
-                printf("BLUE\n");
-                break;
-            case YELLOW:
-                printf("YELLOW\n");
-                break;
-            case ORANGE:
-                printf("ORANGE\n");
-                break;
+    for (i = 0; i < n; i++) {
+        actual_sum += nums[i];
+    }
+  
+    int max = nums[0];
+    for (i = 1; i < n; i++) {
+        if (nums[i] > max) {
+            max = nums[i];
         }
     }
+    
+ 
+    for (i = 0; i <= max; i++) {
+        expected_sum += i;
+    }
+    
+    int repeated = actual_sum - expected_sum;
+    
+    printf("Repeated element: %d\n", repeated);
     
     return 0;
 }
