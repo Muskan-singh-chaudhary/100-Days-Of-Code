@@ -1,102 +1,45 @@
-Q129: Calculate sum and average from file
+Q115: Check if two strings are anagrams
 #include <stdio.h>
+#include <string.h>
 
 int main() {
-    FILE *file;
-    int num, count = 0, sum = 0;
-    float average;
+    char s[100], t[100];
+    int count_s[26] = {0}, count_t[26] = {0};
+    int i, is_anagram = 1;
     
-    file = fopen("numbers.txt", "r");
+    printf("Enter first string: ");
+    scanf("%s", s);
     
-    if (file == NULL) {
-        printf("Error: Could not open numbers.txt!\n");
-        return 1;
+    printf("Enter second string: ");
+    scanf("%s", t);
+    
+    printf("String s: %s\n", s);
+    printf("String t: %s\n", t);
+    
+    int len_s = strlen(s);
+    int len_t = strlen(t);
+    
+    if (len_s != len_t) {
+        printf("Not Anagram\n");
+        return 0;
+    }
+ 
+    for (i = 0; i < len_s; i++) {
+        count_s[s[i] - 'a']++;
+        count_t[t[i] - 'a']++;
+    }
+   
+    for (i = 0; i < 26; i++) {
+        if (count_s[i] != count_t[i]) {
+            is_anagram = 0;
+            break;
+        }
     }
     
-    printf("Reading numbers from numbers.txt...\n");
-    
-    while (fscanf(file, "%d", &num) == 1) {
-        sum += num;
-        count++;
-    }
-    
-    fclose(file);
-    
-    if (count == 0) {
-        printf("No numbers found in file!\n");
-        return 1;
-    }
-    
-    average = (float)sum / count;
-    
-    printf("Count: %d\n", count);
-    printf("Sum: %d\n", sum);
-    printf("Average: %.2f\n", average);
-    
-    return 0;
-}
-
-Q130: Store and read student records
-#include <stdio.h>
-
-int main() {
-    FILE *file;
-    int choice, n, i;
-    char name[50];
-    int roll, marks;
-    
-    printf("Student Records Management\n");
-    printf("1. Write records\n");
-    printf("2. Read records\n");
-    printf("Enter choice: ");
-    scanf("%d", &choice);
-    
-    if (choice == 1) {
-        file = fopen("students.txt", "w");
-        
-        if (file == NULL) {
-            printf("Error: Could not create file!\n");
-            return 1;
-        }
-        
-        printf("Enter number of students: ");
-        scanf("%d", &n);
-        
-        for (i = 0; i < n; i++) {
-            printf("\nStudent %d:\n", i + 1);
-            printf("Name: ");
-            scanf("%s", name);
-            printf("Roll Number: ");
-            scanf("%d", &roll);
-            printf("Marks: ");
-            scanf("%d", &marks);
-            
-            fprintf(file, "%s %d %d\n", name, roll, marks);
-        }
-        
-        fclose(file);
-        printf("\nRecords saved successfully!\n");
-        
-    } else if (choice == 2) {
-        file = fopen("students.txt", "r");
-        
-        if (file == NULL) {
-            printf("Error: Could not open file!\n");
-            return 1;
-        }
-        
-        printf("\nStudent Records:\n");
-        printf("%-20s %-15s %-10s\n", "Name", "Roll Number", "Marks");
-        printf("------------------------------------------------\n");
-        
-        while (fscanf(file, "%s %d %d", name, &roll, &marks) == 3) {
-            printf("%-20s %-15d %-10d\n", name, roll, marks);
-        }
-        
-        fclose(file);
-        
+    if (is_anagram) {
+        printf("Anagram\n");
     } else {
-        printf("Invalid choice!\n");
+        printf("Not Anagram\n");
     }
     
     return 0;
