@@ -1,64 +1,29 @@
-Q135: Enum with explicit values starting from 10
+Q118: Find missing number from 0 to n
 #include <stdio.h>
 
-enum Numbers {
-    FIRST = 10,
-    SECOND,
-    THIRD,
-    FOURTH,
-    FIFTH
-};
-
 int main() {
-    printf("Enum values starting from 10:\n");
-    printf("FIRST = %d\n", FIRST);
-    printf("SECOND = %d\n", SECOND);
-    printf("THIRD = %d\n", THIRD);
-    printf("FOURTH = %d\n", FOURTH);
-    printf("FIFTH = %d\n", FIFTH);
+    int n, i;
     
-    return 0;
-}
-
-Q136: Enum for menu choices with operations
-#include <stdio.h>
-
-enum Operation {
-    ADD = 1,
-    SUBTRACT,
-    MULTIPLY
-};
-
-int main() {
-    enum Operation choice;
-    int a, b, result;
+    printf("Enter size of array: ");
+    scanf("%d", &n);
     
-    printf("Enter two numbers: ");
-    scanf("%d %d", &a, &b);
+    int nums[n];
     
-    printf("\nMenu:\n");
-    printf("1. ADD\n");
-    printf("2. SUBTRACT\n");
-    printf("3. MULTIPLY\n");
-    printf("Enter choice: ");
-    scanf("%d", &choice);
-    
-    switch(choice) {
-        case ADD:
-            result = a + b;
-            printf("%d + %d = %d\n", a, b, result);
-            break;
-        case SUBTRACT:
-            result = a - b;
-            printf("%d - %d = %d\n", a, b, result);
-            break;
-        case MULTIPLY:
-            result = a * b;
-            printf("%d * %d = %d\n", a, b, result);
-            break;
-        default:
-            printf("Invalid choice\n");
+    printf("Enter array elements (0 to %d with one missing):\n", n);
+    for (i = 0; i < n; i++) {
+        scanf("%d", &nums[i]);
     }
+  
+    int expected_sum = (n * (n + 1)) / 2;
+ 
+    int actual_sum = 0;
+    for (i = 0; i < n; i++) {
+        actual_sum += nums[i];
+    }
+    
+    int missing = expected_sum - actual_sum;
+    
+    printf("Missing number: %d\n", missing);
     
     return 0;
 }
