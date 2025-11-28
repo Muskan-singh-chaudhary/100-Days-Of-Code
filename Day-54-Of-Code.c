@@ -1,97 +1,37 @@
-Q107: Find previous greater element for each element (brute force)
+Q104: Find pivot integer x where sum(1 to x) equals sum(x to n)
 #include <stdio.h>
 
 int main() {
-    int n, i, j;
+    int n, x;
+    int pivot = -1;
     
-    printf("Enter size of array: ");
+    printf("Enter positive integer n: ");
     scanf("%d", &n);
     
-    int arr[n];
-    int prev_greater[n];
-    
-    printf("Enter array elements:\n");
-    for (i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
-    }
-    
-    printf("Array: ");
-    for (i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
+    printf("n: %d\n", n);
  
-    for (i = 0; i < n; i++) {
-        prev_greater[i] = -1;  
-   
-        for (j = i - 1; j >= 0; j--) {
-            if (arr[j] > arr[i]) {
-                prev_greater[i] = arr[j];
-                break;
-            }
+    for (x = 1; x <= n; x++) {
+        int left_sum = 0, right_sum = 0;
+        int i;
+       
+        for (i = 1; i <= x; i++) {
+            left_sum += i;
+        }
+     
+        for (i = x; i <= n; i++) {
+            right_sum += i;
         }
         
-        printf("For element %d at index %d: ", arr[i], i);
-        if (prev_greater[i] != -1) {
-            printf("Previous greater element is %d\n", prev_greater[i]);
-        } else {
-            printf("No previous greater element\n");
-        }
-    }
-    
-    printf("\nPrevious Greater Elements: ");
-    for (i = 0; i < n; i++) {
-        printf("%d", prev_greater[i]);
-        if (i < n - 1) {
-            printf(", ");
-        }
-    }
-    printf("\n");
-    
-    return 0;
-}
-
-Q108: Product of array except self
-#include <stdio.h>
-
-int main() {
-    int n, i, j;
-    
-    printf("Enter size of array: ");
-    scanf("%d", &n);
-    
-    int nums[n];
-    int answer[n];
-    
-    printf("Enter array elements:\n");
-    for (i = 0; i < n; i++) {
-        scanf("%d", &nums[i]);
-    }
-    
-    printf("Array: ");
-    for (i = 0; i < n; i++) {
-        printf("%d ", nums[i]);
-    }
-    printf("\n");
-  
-    for (i = 0; i < n; i++) {
-        int product = 1;
-      
-        for (j = 0; j < n; j++) {
-            if (i != j) {
-                product *= nums[j];
-            }
-        }
+        printf("x = %d: sum(1 to %d) = %d, sum(%d to %d) = %d\n", 
+               x, x, left_sum, x, n, right_sum);
         
-        answer[i] = product;
-        printf("Product except nums[%d] (%d): %d\n", i, nums[i], answer[i]);
+        if (left_sum == right_sum) {
+            pivot = x;
+            break;
+        }
     }
     
-    printf("\nAnswer array: ");
-    for (i = 0; i < n; i++) {
-        printf("%d ", answer[i]);
-    }
-    printf("\n");
+    printf("Pivot integer: %d\n", pivot);
     
     return 0;
 }
