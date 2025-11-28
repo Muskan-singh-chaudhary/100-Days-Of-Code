@@ -1,84 +1,56 @@
-Q117: Merge two sorted arrays
+Q109: Maximum sum of all subarrays of size k
 #include <stdio.h>
 
 int main() {
-    int m, n, i, j, k;
-    
-    printf("Enter size of first array: ");
-    scanf("%d", &m);
-    
-    int nums1[m];
-    
-    printf("Enter first sorted array elements:\n");
-    for (i = 0; i < m; i++) {
-        scanf("%d", &nums1[i]);
-    }
-    
-    printf("Enter size of second array: ");
-    scanf("%d", &n);
-    
-    int nums2[n];
-    
-    printf("Enter second sorted array elements:\n");
-    for (i = 0; i < n; i++) {
-        scanf("%d", &nums2[i]);
-    }
-    
-    // Merge arrays
-    int merged[m + n];
-    i = 0; j = 0; k = 0;
-    
-    while (i < m && j < n) {
-        if (nums1[i] <= nums2[j]) {
-            merged[k++] = nums1[i++];
-        } else {
-            merged[k++] = nums2[j++];
-        }
-    }
-    
-    while (i < m) {
-        merged[k++] = nums1[i++];
-    }
-    
-    while (j < n) {
-        merged[k++] = nums2[j++];
-    }
-    
-    printf("Merged sorted array: ");
-    for (i = 0; i < m + n; i++) {
-        printf("%d ", merged[i]);
-    }
-    printf("\n");
-    
-    return 0;
-}
-
-Q118: Find missing number from 0 to n
-#include <stdio.h>
-
-int main() {
-    int n, i;
+    int n, k, i, j;
+    int max_sum = 0;
     
     printf("Enter size of array: ");
     scanf("%d", &n);
     
-    int nums[n];
+    int arr[n];
     
-    printf("Enter array elements (0 to %d with one missing):\n", n);
+    printf("Enter array elements:\n");
     for (i = 0; i < n; i++) {
-        scanf("%d", &nums[i]);
-    }
- 
-    int expected_sum = (n * (n + 1)) / 2;
- 
-    int actual_sum = 0;
-    for (i = 0; i < n; i++) {
-        actual_sum += nums[i];
+        scanf("%d", &arr[i]);
     }
     
-    int missing = expected_sum - actual_sum;
+    printf("Enter subarray size k: ");
+    scanf("%d", &k);
     
-    printf("Missing number: %d\n", missing);
+    printf("Array: ");
+    for (i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    printf("Subarray size k: %d\n", k);
+    
+    if (k > n) {
+        printf("Error: k cannot be greater than array size\n");
+        return 1;
+    }
+    
+ 
+    printf("\nAll subarrays of size %d:\n", k);
+    
+    for (i = 0; i <= n - k; i++) {
+        int current_sum = 0;
+        
+        printf("Subarray %d: [", i + 1);
+        for (j = i; j < i + k; j++) {
+            printf("%d", arr[j]);
+            if (j < i + k - 1) printf(", ");
+            current_sum += arr[j];
+        }
+        printf("] = %d\n", current_sum);
+        
+   
+        if (i == 0 || current_sum > max_sum) {
+            max_sum = current_sum;
+        }
+    }
+    
+    printf("\nMaximum sum of subarray of size %d: %d\n", k, max_sum);
     
     return 0;
 }
