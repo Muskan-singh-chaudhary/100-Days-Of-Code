@@ -1,0 +1,58 @@
+Q121: Create file and write user data
+#include <stdio.h>
+
+int main() {
+    FILE *file;
+    char name[50];
+    int age;
+    
+    printf("Enter your name: ");
+    fgets(name, sizeof(name), stdin);
+    
+    printf("Enter your age: ");
+    scanf("%d", &age);
+    
+    file = fopen("info.txt", "w");
+    
+    if (file == NULL) {
+        printf("Error: Could not create file!\n");
+        return 1;
+    }
+    
+    fprintf(file, "Name: %s", name);
+    fprintf(file, "Age: %d\n", age);
+    
+    fclose(file);
+    
+    printf("\nData successfully saved to info.txt!\n");
+    
+    return 0;
+}
+
+Q122: Read file contents using fgets()
+#include <stdio.h>
+
+int main() {
+    FILE *file;
+    char line[200];
+    
+    file = fopen("info.txt", "r");
+    
+    if (file == NULL) {
+        printf("Error: Could not open file!\n");
+        return 1;
+    }
+    
+    printf("Contents of info.txt:\n");
+    printf("---------------------\n");
+    
+    while (fgets(line, sizeof(line), file) != NULL) {
+        printf("%s", line);
+    }
+    
+    printf("---------------------\n");
+    
+    fclose(file);
+    
+    return 0;
+}
