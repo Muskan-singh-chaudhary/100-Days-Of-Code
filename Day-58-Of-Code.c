@@ -1,91 +1,44 @@
-Q115: Check if two strings are anagrams
-#include <stdio.h>
-#include <string.h>
-
-int main() {
-    char s[100], t[100];
-    int count_s[26] = {0}, count_t[26] = {0};
-    int i, is_anagram = 1;
-    
-    printf("Enter first string: ");
-    scanf("%s", s);
-    
-    printf("Enter second string: ");
-    scanf("%s", t);
-    
-    printf("String s: %s\n", s);
-    printf("String t: %s\n", t);
-    
-    int len_s = strlen(s);
-    int len_t = strlen(t);
-    
-    if (len_s != len_t) {
-        printf("Not Anagram\n");
-        return 0;
-    }
-  
-    for (i = 0; i < len_s; i++) {
-        count_s[s[i] - 'a']++;
-        count_t[t[i] - 'a']++;
-    }
- 
-    for (i = 0; i < 26; i++) {
-        if (count_s[i] != count_t[i]) {
-            is_anagram = 0;
-            break;
-        }
-    }
-    
-    if (is_anagram) {
-        printf("Anagram\n");
-    } else {
-        printf("Not Anagram\n");
-    }
-    
-    return 0;
-}
-
-Q116: Two Sum - Find two indices that sum to target
+Q108: Product of array except self
 #include <stdio.h>
 
 int main() {
-    int n, target, i, j;
-    int found = 0;
+    int n, i, j;
     
     printf("Enter size of array: ");
     scanf("%d", &n);
     
     int nums[n];
+    int answer[n];
     
     printf("Enter array elements:\n");
     for (i = 0; i < n; i++) {
         scanf("%d", &nums[i]);
     }
     
-    printf("Enter target sum: ");
-    scanf("%d", &target);
-    
     printf("Array: ");
     for (i = 0; i < n; i++) {
         printf("%d ", nums[i]);
     }
     printf("\n");
-    printf("Target: %d\n", target);
  
-    for (i = 0; i < n - 1; i++) {
-        for (j = i + 1; j < n; j++) {
-            if (nums[i] + nums[j] == target) {
-                printf("%d %d\n", i, j);
-                found = 1;
-                break;
+    for (i = 0; i < n; i++) {
+        int product = 1;
+   
+        for (j = 0; j < n; j++) {
+            if (i != j) {
+                product *= nums[j];
             }
         }
-        if (found) break;
+        
+        answer[i] = product;
+        printf("Product except nums[%d] (%d): %d\n", i, nums[i], answer[i]);
     }
     
-    if (!found) {
-        printf("-1 -1\n");
+    printf("\nAnswer array: ");
+    for (i = 0; i < n; i++) {
+        printf("%d ", answer[i]);
     }
+    printf("\n");
     
     return 0;
 }
