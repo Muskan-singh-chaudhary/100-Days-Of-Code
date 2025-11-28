@@ -1,56 +1,43 @@
-Q131: Enum for days of week
+Q116: Two Sum - Find two indices that sum to target
 #include <stdio.h>
 
-enum Days {
-    SUNDAY = 0,
-    MONDAY,
-    TUESDAY,
-    WEDNESDAY,
-    THURSDAY,
-    FRIDAY,
-    SATURDAY
-};
-
 int main() {
-    printf("Days of the Week:\n");
-    printf("SUNDAY = %d\n", SUNDAY);
-    printf("MONDAY = %d\n", MONDAY);
-    printf("TUESDAY = %d\n", TUESDAY);
-    printf("WEDNESDAY = %d\n", WEDNESDAY);
-    printf("THURSDAY = %d\n", THURSDAY);
-    printf("FRIDAY = %d\n", FRIDAY);
-    printf("SATURDAY = %d\n", SATURDAY);
+    int n, target, i, j;
+    int found = 0;
     
-    return 0;
-}
-
-Q132: Enum for traffic lights
-#include <stdio.h>
-
-enum TrafficLight {
-    RED,
-    YELLOW,
-    GREEN
-};
-
-int main() {
-    enum TrafficLight light;
+    printf("Enter size of array: ");
+    scanf("%d", &n);
     
-    printf("Enter traffic light (0=RED, 1=YELLOW, 2=GREEN): ");
-    scanf("%d", &light);
+    int nums[n];
     
-    switch(light) {
-        case RED:
-            printf("Stop\n");
-            break;
-        case YELLOW:
-            printf("Wait\n");
-            break;
-        case GREEN:
-            printf("Go\n");
-            break;
-        default:
-            printf("Invalid input\n");
+    printf("Enter array elements:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &nums[i]);
+    }
+    
+    printf("Enter target sum: ");
+    scanf("%d", &target);
+    
+    printf("Array: ");
+    for (i = 0; i < n; i++) {
+        printf("%d ", nums[i]);
+    }
+    printf("\n");
+    printf("Target: %d\n", target);
+  
+    for (i = 0; i < n - 1; i++) {
+        for (j = i + 1; j < n; j++) {
+            if (nums[i] + nums[j] == target) {
+                printf("%d %d\n", i, j);
+                found = 1;
+                break;
+            }
+        }
+        if (found) break;
+    }
+    
+    if (!found) {
+        printf("-1 -1\n");
     }
     
     return 0;
