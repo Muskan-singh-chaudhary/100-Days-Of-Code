@@ -1,84 +1,43 @@
-Q103: Find pivot index where left sum equals right sum
+Q102: Find ceil of x in sorted array
 #include <stdio.h>
 
 int main() {
-    int n, i, j;
-    int pivot_index = -1;
+    int n, x, i;
+    int ceil_index = -1;
     
     printf("Enter size of array: ");
     scanf("%d", &n);
     
-    int nums[n];
+    int arr[n];
     
-    printf("Enter array elements:\n");
+    printf("Enter sorted array elements:\n");
     for (i = 0; i < n; i++) {
-        scanf("%d", &nums[i]);
+        scanf("%d", &arr[i]);
     }
+    
+    printf("Enter value x: ");
+    scanf("%d", &x);
     
     printf("Array: ");
     for (i = 0; i < n; i++) {
-        printf("%d ", nums[i]);
+        printf("%d ", arr[i]);
     }
     printf("\n");
- 
-    for (i = 0; i < n; i++) {
-        int left_sum = 0, right_sum = 0;
-     
-        for (j = 0; j < i; j++) {
-            left_sum += nums[j];
-        }
-    
-        for (j = i + 1; j < n; j++) {
-            right_sum += nums[j];
-        }
-        
-        printf("Index %d: left_sum = %d, right_sum = %d\n", i, left_sum, right_sum);
-        
-        if (left_sum == right_sum) {
-            pivot_index = i;
-            break;
-        }
-    }
-    
-    printf("Pivot index: %d\n", pivot_index);
-    
-    return 0;
-}
-
-Q104: Find pivot integer x where sum(1 to x) equals sum(x to n)
-#include <stdio.h>
-
-int main() {
-    int n, x;
-    int pivot = -1;
-    
-    printf("Enter positive integer n: ");
-    scanf("%d", &n);
-    
-    printf("n: %d\n", n);
- 
-    for (x = 1; x <= n; x++) {
-        int left_sum = 0, right_sum = 0;
-        int i;
+    printf("x: %d\n", x);
    
-        for (i = 1; i <= x; i++) {
-            left_sum += i;
-        }
-  
-        for (i = x; i <= n; i++) {
-            right_sum += i;
-        }
-        
-        printf("x = %d: sum(1 to %d) = %d, sum(%d to %d) = %d\n", 
-               x, x, left_sum, x, n, right_sum);
-        
-        if (left_sum == right_sum) {
-            pivot = x;
+    for (i = 0; i < n; i++) {
+        if (arr[i] >= x) {
+            ceil_index = i;
             break;
         }
     }
     
-    printf("Pivot integer: %d\n", pivot);
+    if (ceil_index != -1) {
+        printf("Ceil of %d is %d at index %d\n", x, arr[ceil_index], ceil_index);
+    } else {
+        printf("Ceil of %d does not exist\n", x);
+        printf("Index: %d\n", ceil_index);
+    }
     
     return 0;
 }
