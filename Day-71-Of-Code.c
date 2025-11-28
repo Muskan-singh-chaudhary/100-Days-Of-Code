@@ -1,73 +1,30 @@
-Q141: Structure Student - read and print one student
+Q121: Create file and write user data
 #include <stdio.h>
 
-struct Student {
-    char name[50];
-    int roll_no;
-    float marks;
-};
-
 int main() {
-    struct Student student;
-    
-    printf("Enter student details:\n");
-    
-    printf("Name: ");
-    scanf("%s", student.name);
-    
-    printf("Roll Number: ");
-    scanf("%d", &student.roll_no);
-    
-    printf("Marks: ");
-    scanf("%f", &student.marks);
-    
-    printf("\nStudent Details:\n");
-    printf("Name: %s\n", student.name);
-    printf("Roll Number: %d\n", student.roll_no);
-    printf("Marks: %.2f\n", student.marks);
-    
-    return 0;
-}
-
-
-Q142: Array of structures - store 5 students
-#include <stdio.h>
-
-struct Student {
+    FILE *file;
     char name[50];
-    int roll_no;
-    float marks;
-};
-
-int main() {
-    struct Student students[5];
-    int i;
+    int age;
     
-    printf("Enter details of 5 students:\n");
+    printf("Enter your name: ");
+    fgets(name, sizeof(name), stdin);
     
-    for (i = 0; i < 5; i++) {
-        printf("\nStudent %d:\n", i + 1);
-        
-        printf("Name: ");
-        scanf("%s", students[i].name);
-        
-        printf("Roll Number: ");
-        scanf("%d", &students[i].roll_no);
-        
-        printf("Marks: ");
-        scanf("%f", &students[i].marks);
+    printf("Enter your age: ");
+    scanf("%d", &age);
+    
+    file = fopen("info.txt", "w");
+    
+    if (file == NULL) {
+        printf("Error: Could not create file!\n");
+        return 1;
     }
     
-    printf("\n\nAll Student Details:\n");
-    printf("%-20s %-15s %-10s\n", "Name", "Roll Number", "Marks");
-    printf("------------------------------------------------\n");
+    fprintf(file, "Name: %s", name);
+    fprintf(file, "Age: %d\n", age);
     
-    for (i = 0; i < 5; i++) {
-        printf("%-20s %-15d %-10.2f\n", 
-               students[i].name, 
-               students[i].roll_no, 
-               students[i].marks);
-    }
+    fclose(file);
+    
+    printf("\nData successfully saved to info.txt!\n");
     
     return 0;
 }
